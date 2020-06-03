@@ -1,5 +1,30 @@
 .App {
+  display: grid;
+  height: 100vh;
+  grid-template-rows: 10vh 1fr 10vh;
+}
+
+table {
+  border-spacing: 0;
+}
+
+td, th {
+  border: 1px solid black;
+}
+
+tr .green {
+  color: green;
+}
+
+tr .red {
+  color: red;
+}
+
+.App-label-container {
+  width: 250px;
+  border: 1px solid red;
   text-align: center;
+  line-height: 50px;
 }
 
 .App-logo {
@@ -13,14 +38,13 @@
   }
 }
 
-.App-header {
+.App-header, .App-footer {
   background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  font-size: 12px;
   color: white;
 }
 
