@@ -20,13 +20,6 @@ tr .red {
   color: red;
 }
 
-.App-label-container {
-  width: 250px;
-  border: 1px solid red;
-  text-align: center;
-  line-height: 50px;
-}
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;

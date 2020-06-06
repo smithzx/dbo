@@ -1,28 +1,50 @@
 import React from 'react';
 import {myStatementData} from '../../my-statement-data';
+import {Checkbox} from './Checkbox';
+
+const initialState = {
+    showDate: true,
+    showTime: true,
+    showType: true,
+    showIncome: true,
+    showOutcome: true,
+};
 
 export function Content() {
-    const [showDate, setShowDate] = React.useState(true);
+    const [{showDate, showType}, setCheckboxState] = React.useState(initialState);
     const formatMonth = (month) => month < 10 ? '0' + month : month;
 
     const onChange = e => {
-        setShowDate(e.target.checked);
+        const attr = e.target.getAttribute('dataId');
+        const checked = e.target.checked;
+        setCheckboxState(prevState => ({
+            ...prevState,
+            [attr]: checked,
+        }));
     };
 
     return (
         <div className="App-content">
-            <input type="checkbox" onChange={onChange} title={'Показать дату'} checked={showDate}/>
-            <div className="App-label-container">
-                <label>Показать дату</label>
-            </div>
+            <Checkbox
+                checked={showDate}
+                title={'Показать дату'}
+                onChange={onChange}
+                dataId={'showDate'}
+            />
+            <Checkbox
+                checked={showType}
+                title={'Показать тип'}
+                onChange={onChange}
+                dataId={'showType'}
+            />
             <table>
                 <tr>
                     {showDate && <th>
                         Дата
                     </th>}
-                    <th>
+                    {showType && <th>
                         Тип
-                    </th>
+                    </th>}
                     <th>
                         Приход
                     </th>
@@ -37,9 +59,9 @@ export function Content() {
                             {showDate && <td>
                                 {tableDate}
                             </td>}
-                            <td>
+                            {showType && <td>
                                 {el.type}
-                            </td>
+                            </td>}
                             <td className={'green'}>
                                 {el.amount > 0 ? el.amount : ''}
                             </td>
