@@ -23,6 +23,10 @@ export function Content() {
         }));
     };
 
+    const onChangeSelect = e => {
+        console.log('e', e.target.selectedIndex);
+    };
+
     return (
         <div className="App-content">
             <Checkbox
@@ -37,6 +41,10 @@ export function Content() {
                 onChange={onChange}
                 dataId={'showType'}
             />
+            <select onChange={onChangeSelect}>
+                <option>Без группировки</option>
+                <option>С группировкой</option>
+            </select>
             <table>
                 <tr>
                     {showDate && <th>
