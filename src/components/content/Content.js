@@ -1,6 +1,7 @@
 import React from 'react';
-import {myStatementData} from '../../my-statement-data';
 import {Checkbox} from './Checkbox';
+import {Table} from './Table1';
+import {TableGroup} from './Table2';
 
 const initialState = {
     showDate: true,
@@ -12,9 +13,9 @@ const initialState = {
 
 export function Content() {
     const [{showDate, showType}, setCheckboxState] = React.useState(initialState);
-    const formatMonth = (month) => month < 10 ? '0' + month : month;
+    const [selectedIndex, setSelectedIndex] = React.useState(0);
 
-    const onChange = e => {
+    const onChangeCheckbox = e => {
         const attr = e.target.getAttribute('dataId');
         const checked = e.target.checked;
         setCheckboxState(prevState => ({
@@ -24,7 +25,7 @@ export function Content() {
     };
 
     const onChangeSelect = e => {
-        console.log('e', e.target.selectedIndex);
+        setSelectedIndex(e.target.selectedIndex);
     };
 
     return (
@@ -32,54 +33,27 @@ export function Content() {
             <Checkbox
                 checked={showDate}
                 title={'Показать дату'}
-                onChange={onChange}
+                onChange={onChangeCheckbox}
                 dataId={'showDate'}
             />
             <Checkbox
                 checked={showType}
                 title={'Показать тип'}
-                onChange={onChange}
+                onChange={onChangeCheckbox}
                 dataId={'showType'}
             />
             <select onChange={onChangeSelect}>
                 <option>Без группировки</option>
                 <option>С группировкой</option>
             </select>
-            <table>
-                <tr>
-                    {showDate && <th>
-                        Дата
-                    </th>}
-                    {showType && <th>
-                        Тип
-                    </th>}
-                    <th>
-                        Приход
-                    </th>
-                    <th>
-                        Расход
-                    </th>
-                </tr>
-                {myStatementData.map(el => {
-                    const tableDate = new Date(el.date).getDate() + '.' + formatMonth(new Date(el.date).getMonth() + 1) + '.' + new Date(el.date).getFullYear();
-                    return (
-                        <tr>
-                            {showDate && <td>
-                                {tableDate}
-                            </td>}
-                            {showType && <td>
-                                {el.type}
-                            </td>}
-                            <td className={'green'}>
-                                {el.amount > 0 ? el.amount : ''}
-                            </td>
-                            <td className={'red'}>
-                                {el.amount < 0 ? -el.amount : ''}
-                            </td>
-                        </tr>
-                    )
-                })}
-            </table>
+            {selectedIndex === 0 ? (
+                <Table
+                    showDate={showDate}
+                    showType={showType}
+                />
+            ) : (
+                <TableGroup/>
+            )}
         </div>
     );
 }

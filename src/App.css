@@ -41,6 +41,10 @@ tr .red {
   color: white;
 }
 
+.App-content {
+  overflow-y: scroll;
+}
+
 .App-link {
   color: #61dafb;
 }
