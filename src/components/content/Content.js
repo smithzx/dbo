@@ -12,16 +12,28 @@ const initialState = {
 };
 
 export function Content() {
-    const [{showDate, showType}, setCheckboxState] = React.useState(initialState);
+    const [{
+        showDate,
+        showTime,
+        showType,
+        showIncome,
+        showOutcome,
+    }, setCheckboxState] = React.useState(initialState);
     const [selectedIndex, setSelectedIndex] = React.useState(0);
 
     const onChangeCheckbox = e => {
         const attr = e.target.getAttribute('dataId');
         const checked = e.target.checked;
-        setCheckboxState(prevState => ({
-            ...prevState,
-            [attr]: checked,
-        }));
+        setCheckboxState(prevState => {
+            const countChecked = Object.values(prevState).reduce((acc, el) => el ? acc + 1 : acc, 0);
+            if (countChecked === 1 && !checked) {
+                return prevState;
+            }
+            return {
+                ...prevState,
+                [attr]: checked,
+            };
+        });
     };
 
     const onChangeSelect = e => {
@@ -37,10 +49,28 @@ export function Content() {
                 dataId={'showDate'}
             />
             <Checkbox
+                checked={showTime}
+                title={'Показать время'}
+                onChange={onChangeCheckbox}
+                dataId={'showTime'}
+            />
+            <Checkbox
                 checked={showType}
                 title={'Показать тип'}
                 onChange={onChangeCheckbox}
                 dataId={'showType'}
+            />
+            <Checkbox
+                checked={showIncome}
+                title={'Показать приход'}
+                onChange={onChangeCheckbox}
+                dataId={'showIncome'}
+            />
+            <Checkbox
+                checked={showOutcome}
+                title={'Показать расход'}
+                onChange={onChangeCheckbox}
+                dataId={'showOutcome'}
             />
             <select onChange={onChangeSelect}>
                 <option>Без группировки</option>
